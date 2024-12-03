@@ -1,4 +1,4 @@
-from operator import sub
+from itertools import pairwise
 
 
 def solve_day(my_file):
@@ -13,7 +13,7 @@ def parse_data(my_file) -> list:
 
 
 def is_safe(report: list) -> bool:
-  diffs = [sub(*pair) for pair in zip(report, report[1:])]
+  diffs = {x - y for x, y in pairwise(report)}
   return all(diff in [1, 2, 3] for diff in diffs) or all(diff in [-1, -2, -3] for diff in diffs)
 
 
@@ -22,5 +22,4 @@ def part1(data: list) -> int:
 
 
 def part2(data: list) -> int:
-  levels = lambda report: any(is_safe(rep) for rep in ([report] + [report[:i-1]+report[i:] for i in range(1, len(report)+1)]))
-  return sum(levels(rep) for rep in data)
+  return sum(any(is_safe(report[:i] + report[i + 1:]) for i in range(len(report))) for report in data)
