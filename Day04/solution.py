@@ -28,7 +28,6 @@ def num_of_xmas(data: list, pos: tuple) -> int:
     k2 = [a + b for a, b in zip(k, v)]
     total += 1 if (is_valid(data, k, {'A'})
                    and is_valid(data, k2, {'S'})) else 0
-
   return total
 
 
