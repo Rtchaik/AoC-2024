@@ -37,8 +37,7 @@ def sorting(pages: list, rules: dict) -> list:
   while pages:
     current = pages.pop()
     if (move_up := rules.get(current, set()) & set(pages)):
-      for page in move_up:
-        pages.remove(page)
+      pages = [page for page in pages if page not in move_up]
       new.extend(sorting(list(move_up), rules))
     new.append(current)
   return new
